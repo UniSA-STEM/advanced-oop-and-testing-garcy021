@@ -105,3 +105,16 @@ class Enclosure:
             f"species={species_text} | animals={len(self.__animals)}/{self.__size} | "
             f"cleanliness={self.__cleanliness_level}%"
         )
+    # Cleaning Behaviour
+    def clean(self):
+        """Cleans enclosure by restoring cleanliness to 100%."""
+        self.__cleanliness_level = 100
+
+    def soil(self, amount):
+        """Reduces cleanliness by a given amount (used for demo)."""
+        if type(amount) != int or amount < 0:
+            raise ValueError("amount must be a non-negative integer.")
+
+        self.__cleanliness_level -= amount
+        if self.__cleanliness_level < 0:
+            self.__cleanliness_level = 0
