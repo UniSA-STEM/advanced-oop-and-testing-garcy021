@@ -71,3 +71,20 @@ class Animal(ABC):
         """Ensures a string value is non-empty."""
         if type(value) != str or not value.strip():
             raise ValueError(field + " must be a non-empty string.")
+
+
+    # Encapsulated Getters
+    def get_name(self):
+        return self.__name
+
+    def get_species(self):
+        return self.__species
+
+    def get_age(self):
+        return self.__age
+
+    def get_dietary_needs(self):
+        return self.__dietary_needs
+
+    def get_required_environment(self):
+        return self.__required_environment
