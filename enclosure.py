@@ -7,6 +7,8 @@ Username: garcy021
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
+from animal import Animal
+
 
 class Enclosure:
 
@@ -44,3 +46,62 @@ class Enclosure:
 
     def get_allowed_species(self):
         return self.__allowed_species
+
+    # -------------------------
+    # Core Enclosure Behaviours
+    # -------------------------
+    def add_animal(self, animal):
+        # Ensure it's an Animal object (basic safe check)
+        if type(animal) == str or animal is None:
+            raise ValueError("animal must be a valid Animal object.")
+
+        # Capacity check
+        if len(self.__animals) >= self.__size:
+            raise ValueError("Enclosure is full.")
+
+        # Under treatment check (assignment rule)
+        if animal.has_active_health_issue():
+            raise ValueError("Cannot move animal: under treatment.")
+
+        # Environment compatibility check
+        if animal.get_required_environment() != self.__environment_type:
+            raise ValueError(
+                f"{animal.get_name()} cannot be placed in a {self.__environment_type} enclosure."
+            )
+
+        # Single-species rule
+        if self.__allowed_species is None:
+            self.__allowed_species = animal.get_species()
+        else:
+            if animal.get_species() != self.__allowed_species:
+                raise ValueError(
+                    f"Incompatible species. This enclosure is for {self.__allowed_species} only."
+                )
+
+        self.__animals.append(animal)
+
+    def remove_animal(self, animal):
+        """Removes an animal from enclosure."""
+        if animal not in self.__animals:
+            raise ValueError("Animal not found in enclosure.")
+        self.__animals.remove(animal)
+
+        # If empty, reset allowed species
+        if len(self.__animals) == 0:
+            self.__allowed_species = None
+
+    def list_animals(self):
+        """Returns a list of animal names inside this enclosure."""
+        names = []
+        for a in self.__animals:
+            names.append(a.get_name())
+        return names
+
+    def report_status(self):
+        """Returns a short status report."""
+        species_text = self.__allowed_species if self.__allowed_species else "None"
+        return (
+            f"Enclosure '{self.__name}' | env={self.__environment_type} | "
+            f"species={species_text} | animals={len(self.__animals)}/{self.__size} | "
+            f"cleanliness={self.__cleanliness_level}%"
+        )
