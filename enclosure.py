@@ -28,3 +28,19 @@ class Enclosure:
 
         self.__animals = []
         self.__allowed_species = None  # set when first animal is added
+
+    # Getters
+    def get_name(self):
+        return self.__name
+
+    def get_environment_type(self):
+        return self.__environment_type
+
+    def get_size(self):
+        return self.__size
+
+    def get_cleanliness_level(self):
+        return self.__cleanliness_level
+
+    def get_allowed_species(self):
+        return self.__allowed_species
