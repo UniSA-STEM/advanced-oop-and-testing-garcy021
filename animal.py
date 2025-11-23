@@ -88,3 +88,57 @@ class Animal(ABC):
 
     def get_required_environment(self):
         return self.__required_environment
+
+    # Health Management
+    def add_health_record(self, record):
+        """Adds a HealthRecord for this animal."""
+        if type(record) != HealthRecord:
+            raise ValueError("record must be a HealthRecord instance.")
+        self.__health_records.append(record)
+
+    def get_health_records(self, include_resolved=True):
+        """Returns all health records, or only unresolved ones."""
+        if include_resolved:
+            return list(self.__health_records)
+
+        unresolved = []
+        for r in self.__health_records:
+            if not r.resolved:
+                unresolved.append(r)
+        return unresolved
+
+    def has_active_health_issue(self):
+        """Returns True if at least one unresolved issue exists."""
+        for r in self.__health_records:
+            if not r.resolved:
+                return True
+        return False
+
+    def latest_health_issue(self):
+        """Returns the last active issue, or None."""
+        last = None
+        for r in self.__health_records:
+            if not r.resolved:
+                last = r
+        return last
+
+    # -------------------------
+    # Shared Behaviours
+    # -------------------------
+    def eat(self):
+        return f"{self.__name} the {self.__species} is eating ({self.__dietary_needs})."
+
+    def sleep(self):
+        return f"{self.__name} the {self.__species} is sleeping."
+
+    # -------------------------
+    # Abstract Method
+    # -------------------------
+    def make_sound(self):
+        """Each animal must implement its sound."""
+        pass
+
+    def __str__(self):
+        status = "UNDER TREATMENT" if self.has_active_health_issue() else "Healthy"
+        return f"{self.__name} ({self.__species}), age {self.__age}, env={self.__required_environment}, status={status}"
+
