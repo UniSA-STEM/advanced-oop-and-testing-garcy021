@@ -142,3 +142,13 @@ class Animal(ABC):
         status = "UNDER TREATMENT" if self.has_active_health_issue() else "Healthy"
         return f"{self.__name} ({self.__species}), age {self.__age}, env={self.__required_environment}, status={status}"
 
+
+# Categories
+class Mammal(Animal):
+    category = "mammal"
+
+class Bird(Animal):
+    category = "bird"
+
+class Reptile(Animal):
+    category = "reptile"
