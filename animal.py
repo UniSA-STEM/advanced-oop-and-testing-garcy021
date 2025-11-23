@@ -6,7 +6,7 @@ ID: 110395864
 Username: garcy021
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
-from abc import ABC,
+from abc import ABC
 from datetime import date
 
 # HealthRecord Class
@@ -122,18 +122,14 @@ class Animal(ABC):
                 last = r
         return last
 
-    # -------------------------
     # Shared Behaviours
-    # -------------------------
     def eat(self):
         return f"{self.__name} the {self.__species} is eating ({self.__dietary_needs})."
 
     def sleep(self):
         return f"{self.__name} the {self.__species} is sleeping."
 
-    # -------------------------
     # Abstract Method
-    # -------------------------
     def make_sound(self):
         """Each animal must implement its sound."""
         pass
@@ -152,3 +148,25 @@ class Bird(Animal):
 
 class Reptile(Animal):
     category = "reptile"
+
+# Specific Animals
+class Koala(Mammal):
+    def __init__(self, name, age):
+        super().__init__(name, "Koala", age, "Eucalyptus leaves", "forest")
+
+    def make_sound(self):
+        return self.get_name() + " grunts softly."
+
+class Penguin(Bird):
+    def __init__(self, name, age):
+        super().__init__(name, "Penguin", age, "Fish", "aquatic")
+
+    def make_sound(self):
+        return self.get_name() + " squawks loudly."
+
+class Snake(Reptile):
+    def __init__(self, name, age):
+        super().__init__(name, "Snake", age, "Rodents", "desert")
+
+    def make_sound(self):
+        return self.get_name() + " hisses."
