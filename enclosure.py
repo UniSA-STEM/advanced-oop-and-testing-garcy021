@@ -9,7 +9,6 @@ This is my own work as defined by the University's Academic Integrity Policy.
 
 from animal import Animal
 
-
 class Enclosure:
 
     def __init__(self, name, environment_type, size, cleanliness_level=100):
@@ -75,9 +74,7 @@ class Enclosure:
         else:
             if animal.get_species() != self.__allowed_species:
                 raise ValueError(
-                    f"Incompatible species. This enclosure is for {self.__allowed_species} only."
-                )
-
+                    f"Incompatible species. This enclosure is for {self.__allowed_species} only.")
         self.__animals.append(animal)
 
     def remove_animal(self, animal):
