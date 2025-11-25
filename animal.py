@@ -135,7 +135,6 @@ class Bird(Animal):
 class Reptile(Animal):
     category = "reptile"
 
-# DEMONSTRATION ANIMALS (Examples ONLY)
 # These DO NOT restrict the zoo.
 class Koala(Mammal):
     def __init__(self, name, age):
