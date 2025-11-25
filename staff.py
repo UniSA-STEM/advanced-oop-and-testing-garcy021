@@ -7,7 +7,8 @@ Username: garcy021
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
-
+from animal import Animal, HealthRecord
+from enclosure import Enclosure
 
 # Base Staff Class
 class Staff:
@@ -47,3 +48,20 @@ class Staff:
         if type(enclosure) != Enclosure:
             raise ValueError("Assigned object must be an Enclosure.")
         self.__assigned_enclosures.append(enclosure)
+
+# ZooKeeper Role
+class ZooKeeper(Staff):
+
+    def __init__(self, name):
+        super().__init__(name, "ZooKeeper")
+
+    def feed_animal(self, animal):
+        if animal not in self.get_assigned_animals():
+            raise ValueError("ZooKeeper cannot feed unassigned animal.")
+        return animal.eat()
+
+    def clean_enclosure(self, enclosure):
+        if enclosure not in self.get_assigned_enclosures():
+            raise ValueError("ZooKeeper cannot clean unassigned enclosure.")
+        enclosure.clean()
+        return f"{self.get_name()} cleaned enclosure {enclosure.get_name()}."
