@@ -137,7 +137,6 @@ class Reptile(Animal):
 
 # DEMONSTRATION ANIMALS (Examples ONLY)
 # These DO NOT restrict the zoo.
-# The zoo can support ANY animal through new subclasses.
 class Koala(Mammal):
     def __init__(self, name, age):
         super().__init__(name, "Koala", age, "Eucalyptus leaves", "forest")
