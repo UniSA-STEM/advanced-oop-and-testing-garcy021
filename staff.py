@@ -65,3 +65,28 @@ class ZooKeeper(Staff):
             raise ValueError("ZooKeeper cannot clean unassigned enclosure.")
         enclosure.clean()
         return f"{self.get_name()} cleaned enclosure {enclosure.get_name()}."
+
+# Veterinarian Role
+class Veterinarian(Staff):
+
+    def __init__(self, name):
+        super().__init__(name, "Veterinarian")
+
+    def perform_health_check(self, animal, description, severity, treatment=""):
+        if animal not in self.get_assigned_animals():
+            raise ValueError("Veterinarian cannot check an unassigned animal.")
+
+        record = HealthRecord(description, severity, treatment)
+        animal.add_health_record(record)
+        return f"{self.get_name()} recorded a health issue for {animal.get_name()}."
+
+    def mark_resolved(self, animal, notes=""):
+        if animal not in self.get_assigned_animals():
+            raise ValueError("Veterinarian cannot update unassigned animal.")
+
+        issue = animal.latest_health_issue()
+        if issue is None:
+            raise ValueError("Animal has no active health issues.")
+
+        issue.mark_resolved(notes)
+        return f"{self.get_name()} resolved health issue for {animal.get_name()}."
