@@ -1,6 +1,6 @@
 '''
 File: main.py
-Description: A brief description of this Python module.
+Description: It shows how main system works.
 Author: Chirag Garg
 ID: 110395864
 Username: garcy021
