@@ -48,9 +48,7 @@ class Enclosure:
     def get_allowed_species(self):
         return self.__allowed_species
 
-    # -------------------------
     # Core Enclosure Behaviours
-    # -------------------------
 # Adds an animal to the enclosure
     def add_animal(self, animal):
         # Ensure it's an Animal object (basic safe check)
