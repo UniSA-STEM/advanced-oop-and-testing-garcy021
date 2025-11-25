@@ -9,6 +9,7 @@ This is my own work as defined by the University's Academic Integrity Policy.
 
 from animal import Animal
 
+# Represents a single enclosure in the zoo.
 class Enclosure:
 
     def __init__(self, name, environment_type, size, cleanliness_level=100):
@@ -22,6 +23,7 @@ class Enclosure:
         if type(cleanliness_level) != int or cleanliness_level < 0 or cleanliness_level > 100:
             raise ValueError("cleanliness_level must be an int between 0 and 100.")
 
+## Private attributes (encapsulation)
         self.__name = name.strip()
         self.__environment_type = environment_type.strip().lower()
         self.__size = size
@@ -49,6 +51,7 @@ class Enclosure:
     # -------------------------
     # Core Enclosure Behaviours
     # -------------------------
+# Adds an animal to the enclosure
     def add_animal(self, animal):
         # Ensure it's an Animal object (basic safe check)
         if type(animal) == str or animal is None:

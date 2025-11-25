@@ -9,6 +9,8 @@ This is my own work as defined by the University's Academic Integrity Policy.
 from abc import ABC, abstractmethod
 from datetime import date
 
+
+#Stores description, severity, treatment, notes, and resolution status.
 # HealthRecord Class
 class HealthRecord:
 
@@ -26,6 +28,7 @@ class HealthRecord:
         self.date_reported = date.today()
         self.resolved = False
 
+# Marks the issue as resolved and optionally appends extra notes.
     def mark_resolved(self, notes=""):
         """Marks the issue as resolved."""
         self.resolved = True
@@ -35,6 +38,7 @@ class HealthRecord:
             else:
                 self.notes = notes
 
+# Returns a short text summary of this health record.
     def __str__(self):
         status = "Resolved" if self.resolved else "Active"
         return f"[{status}] {self.description} | severity={self.severity} | reported={self.date_reported}"
@@ -80,11 +84,13 @@ class Animal(ABC):
         return self.__required_environment
 
     # Health Management
+# Adds a HealthRecord to this animal.
     def add_health_record(self, record):
         if type(record) != HealthRecord:
             raise ValueError("record must be a HealthRecord instance.")
         self.__health_records.append(record)
 
+#Returns a list of health records.
     def get_health_records(self, include_resolved=True):
         if include_resolved:
             return list(self.__health_records)

@@ -11,6 +11,7 @@ from animal import Animal, HealthRecord
 from enclosure import Enclosure
 
 # Helper: Detect Animal subclasses
+#Returns True if obj is an instance of Animal or a subclass of Animal, using only type() and __bases__ (no isinstance()).
 def is_animal_object(obj):
     current_class = type(obj)
 
@@ -53,7 +54,7 @@ class Staff:
     def get_assigned_enclosures(self):
         return list(self.__assigned_enclosures)
 
-    # ----- Assignments -----
+
     def assign_animal(self, animal):
         # Accept Animal and all subclasses
         if not is_animal_object(animal):
@@ -83,6 +84,7 @@ class ZooKeeper(Staff):
         return f"{self.get_name()} cleaned enclosure {enclosure.get_name()}."
 
 # Veterinarian Role
+#   Veterinarian staff member
 class Veterinarian(Staff):
 
     def __init__(self, name):
