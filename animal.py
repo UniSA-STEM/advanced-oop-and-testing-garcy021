@@ -1,19 +1,16 @@
 '''
 File: animal.py
-Description:  Defines Animal hierarchy and HealthRecord system for the Zoo Management System.
+Description: Defines Animal hierarchy and HealthRecord system for the Zoo Management System.
 Author: Chirag Garg
 ID: 110395864
 Username: garcy021
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
-from abc import ABC
+from abc import ABC, abstractmethod
 from datetime import date
 
 # HealthRecord Class
 class HealthRecord:
-    """
-    Represents a health issue for an animal.
-    """
 
     def __init__(self, description, severity, treatment_plan="", notes=""):
         if type(description) != str or not description.strip():
@@ -42,18 +39,20 @@ class HealthRecord:
         status = "Resolved" if self.resolved else "Active"
         return f"[{status}] {self.description} | severity={self.severity} | reported={self.date_reported}"
 
-# Animal
+
+# ABSTRACT Animal Class
 class Animal(ABC):
-    """
-    Abstract Animal class with fully encapsulated attributes.
-    """
 
     def __init__(self, name, species, age, dietary_needs, required_environment):
-        self.__validate_str(name, "name")
-        self.__validate_str(species, "species")
-        self.__validate_str(dietary_needs, "dietary_needs")
-        self.__validate_str(required_environment, "required_environment")
-
+        # Validation
+        if type(name) != str or not name.strip():
+            raise ValueError("name must be a non-empty string.")
+        if type(species) != str or not species.strip():
+            raise ValueError("species must be a non-empty string.")
+        if type(dietary_needs) != str or not dietary_needs.strip():
+            raise ValueError("dietary_needs must be a non-empty string.")
+        if type(required_environment) != str or not required_environment.strip():
+            raise ValueError("required_environment must be a non-empty string.")
         if type(age) != int or age < 0:
             raise ValueError("age must be a non-negative integer.")
 
@@ -62,16 +61,7 @@ class Animal(ABC):
         self.__age = age
         self.__dietary_needs = dietary_needs.strip()
         self.__required_environment = required_environment.strip().lower()
-
         self.__health_records = []
-
-
-    # Validation
-    def __validate_str(self, value, field):
-        """Ensures a string value is non-empty."""
-        if type(value) != str or not value.strip():
-            raise ValueError(field + " must be a non-empty string.")
-
 
     # Encapsulated Getters
     def get_name(self):
@@ -91,13 +81,11 @@ class Animal(ABC):
 
     # Health Management
     def add_health_record(self, record):
-        """Adds a HealthRecord for this animal."""
         if type(record) != HealthRecord:
             raise ValueError("record must be a HealthRecord instance.")
         self.__health_records.append(record)
 
     def get_health_records(self, include_resolved=True):
-        """Returns all health records, or only unresolved ones."""
         if include_resolved:
             return list(self.__health_records)
 
@@ -108,14 +96,12 @@ class Animal(ABC):
         return unresolved
 
     def has_active_health_issue(self):
-        """Returns True if at least one unresolved issue exists."""
         for r in self.__health_records:
             if not r.resolved:
                 return True
         return False
 
     def latest_health_issue(self):
-        """Returns the last active issue, or None."""
         last = None
         for r in self.__health_records:
             if not r.resolved:
@@ -129,9 +115,9 @@ class Animal(ABC):
     def sleep(self):
         return f"{self.__name} the {self.__species} is sleeping."
 
-    # Abstract Method
+    # Abstract Method (polymorphism)
+    @abstractmethod
     def make_sound(self):
-        """Each animal must implement its sound."""
         pass
 
     def __str__(self):
@@ -139,7 +125,7 @@ class Animal(ABC):
         return f"{self.__name} ({self.__species}), age {self.__age}, env={self.__required_environment}, status={status}"
 
 
-# Categories
+# Category Classes
 class Mammal(Animal):
     category = "mammal"
 
@@ -149,7 +135,9 @@ class Bird(Animal):
 class Reptile(Animal):
     category = "reptile"
 
-# Specific Animals
+# DEMONSTRATION ANIMALS (Examples ONLY)
+# These DO NOT restrict the zoo.
+# The zoo can support ANY animal through new subclasses.
 class Koala(Mammal):
     def __init__(self, name, age):
         super().__init__(name, "Koala", age, "Eucalyptus leaves", "forest")
