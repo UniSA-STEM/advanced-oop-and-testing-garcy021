@@ -6,7 +6,6 @@ ID: 110395864
 Username: garcy021
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
-
 from animal import Animal
 
 # Represents a single enclosure in the zoo.
