@@ -10,6 +10,22 @@ This is my own work as defined by the University's Academic Integrity Policy.
 from animal import Animal, HealthRecord
 from enclosure import Enclosure
 
+# Helper: Detect Animal subclasses
+def is_animal_object(obj):
+    current_class = type(obj)
+
+    while current_class != object:
+        if current_class == Animal:
+            return True
+
+        bases = current_class.__bases__
+        if len(bases) == 0:
+            current_class = object
+        else:
+            current_class = bases[0]
+
+    return False
+
 # Base Staff Class
 class Staff:
 
